@@ -1,5 +1,8 @@
 package com.restaurant.restaurant_manager.model;
 
+import com.restaurant.restaurant_manager.repository.PlatilloRepository;
+import com.restaurant.restaurant_manager.service.PlatilloService;
+
 import jakarta.persistence.*;
 
 @Entity

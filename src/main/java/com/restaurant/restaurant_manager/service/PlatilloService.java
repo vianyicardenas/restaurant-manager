@@ -27,4 +27,9 @@ public class PlatilloService {
     public void eliminar(Long id) {
         repository.deleteById(id);
     }
+
+    public Platillo buscarPorId(Long id) {
+    return repository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Platillo no encontrado"));
+}
 }

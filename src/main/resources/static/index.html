@@ -1,0 +1,294 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Manager</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="brand">
+            <span class="brand-icon">🍽️</span>
+            <div>
+                <h2>Restaurant</h2>
+                <small>MANAGER</small>
+            </div>
+        </div>
+
+        <nav aria-label="Menú principal">
+            <p class="menu-label">MENÚ PRINCIPAL</p>
+            <a href="#" class="nav-link active" data-section="inicio">⌂ Inicio</a>
+            <a href="#" class="nav-link" data-section="platillos">🍴 Platillos</a>
+            <a href="#" class="nav-link" data-section="reservas">📅 Reservas</a>
+            <a href="#" class="nav-link" data-section="pedidos">🛍️ Pedidos</a>
+            <a href="#" class="nav-link" data-section="clientes">👥 Clientes</a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <span>Restaurant Manager</span>
+            <small>Sistema de administración</small>
+        </div>
+    </aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+            <div>
+                <h1 id="page-title">Panel principal</h1>
+                <p>Bienvenido al sistema de gestión de tu restaurante.</p>
+            </div>
+            <div class="user-profile">
+                <span>👤</span>
+                <strong>Administrador</strong>
+            </div>
+        </header>
+
+        <!-- INICIO -->
+        <section id="inicio" class="content-section active-section">
+            <div class="welcome-card">
+                <div>
+                    <h2>¡Bienvenido a Restaurant Manager!</h2>
+                    <p>Administra tu restaurante desde un solo lugar.</p>
+                </div>
+                <span class="welcome-icon">🍽️</span>
+            </div>
+
+            <div class="stats-grid">
+                <article class="stat-card">
+                    <span>👥</span>
+                    <p>Total de clientes</p>
+                    <h2 id="total-clientes">--</h2>
+                </article>
+
+                <article class="stat-card">
+                    <span>🛍️</span>
+                    <p>Total de pedidos</p>
+                    <h2 id="total-pedidos">--</h2>
+                </article>
+
+                <article class="stat-card">
+                    <span>🍴</span>
+                    <p>Total de platillos</p>
+                    <h2 id="total-platillos">--</h2>
+                </article>
+
+                <article class="stat-card">
+                    <span>📅</span>
+                    <p>Total de reservas</p>
+                    <h2 id="total-reservas">--</h2>
+                </article>
+            </div>
+
+            <div class="panel">
+                <h2>Accesos rápidos</h2>
+                <div class="quick-actions">
+                    <button onclick="mostrarSeccion('clientes')">Gestionar clientes</button>
+                    <button onclick="mostrarSeccion('pedidos')">Ver pedidos</button>
+                    <button onclick="mostrarSeccion('reservas')">Ver reservas</button>
+                    <button onclick="mostrarSeccion('platillos')">Ver platillos</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- CLIENTES -->
+        <section id="clientes" class="content-section">
+            <div class="section-heading">
+                <div>
+                    <h2>Gestión de clientes</h2>
+                    <p>Registra y administra los clientes del restaurante.</p>
+                </div>
+                <button onclick="mostrarFormularioCliente()">+ Nuevo cliente</button>
+            </div>
+
+            <div id="formulario-cliente" class="panel hidden">
+                <h3 id="titulo-formulario-cliente">Registrar cliente</h3>
+
+                <form id="cliente-form">
+                    <input type="hidden" id="cliente-id">
+
+                    <label for="cliente-nombre">Nombre del cliente</label>
+                    <input type="text" id="cliente-nombre" name="nombre" required>
+
+                    <label for="cliente-telefono">Teléfono</label>
+                    <input type="text" id="cliente-telefono" name="telefono" required>
+
+                    <div class="form-actions">
+                        <button type="submit">Guardar cliente</button>
+                        <button type="button" class="secondary"
+                            onclick="cerrarFormularioCliente()">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="panel table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Cliente</th>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Hora</th>
+                            <th scope="col">Personas</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-clientes"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- PEDIDOS -->
+        <section id="pedidos" class="content-section">
+            <div class="section-heading">
+                <div>
+                    <h2>Gestión de pedidos</h2>
+                    <p>Consulta los pedidos registrados y sus estados.</p>
+                </div>
+            </div>
+
+            <div class="panel table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Cliente</th>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Total</th>
+                            <th scope="col">Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-pedidos"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- PLATILLOS -->
+        <section id="platillos" class="content-section">
+            <div class="section-heading">
+                <div>
+                    <h2>Gestión de platillos</h2>
+                    <p>Registra, consulta, edita y elimina platillos.</p>
+                </div>
+                <button onclick="mostrarFormularioPlatillo()">+ Nuevo platillo</button>
+            </div>
+
+            <div id="formulario-platillo" class="panel hidden">
+                <h3 id="titulo-formulario-platillo">Registrar platillo</h3>
+
+                <form id="platillo-form">
+                    <input type="hidden" id="platillo-id">
+
+                    <label for="platillo-nombre">Nombre del platillo</label>
+                    <input type="text" id="platillo-nombre" name="nombre" required>
+
+                    <label for="platillo-descripcion">Descripción</label>
+                    <textarea id="platillo-descripcion" name="descripcion"></textarea>
+
+                    <label for="platillo-precio">Precio</label>
+                    <input type="number" id="platillo-precio"
+                        name="precio" min="0" step="0.01" required>
+
+                    <label for="platillo-disponible">Disponibilidad</label>
+                    <select id="platillo-disponible" name="disponible">
+                        <option value="true">Disponible</option>
+                        <option value="false">No disponible</option>
+                    </select>
+
+                    <div class="form-actions">
+                        <button type="submit">Guardar platillo</button>
+                        <button type="button" class="secondary"
+                            onclick="cerrarFormularioPlatillo()">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="panel table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Descripción</th>
+                            <th scope="col">Precio</th>
+                            <th scope="col">Disponible</th>
+                            <th scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-platillos"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- RESERVAS -->
+        <section id="reservas" class="content-section">
+            <div class="section-heading">
+                <div>
+                    <h2>Gestión de reservas</h2>
+                    <p>Administra las reservas del restaurante.</p>
+                </div>
+                <button onclick="mostrarFormularioReserva()">+ Nueva reserva</button>
+            </div>
+
+            <div id="formulario-reserva" class="panel hidden">
+                <h3 id="titulo-formulario-reserva">Registrar reserva</h3>
+
+                <form id="reserva-form">
+                    <input type="hidden" id="reserva-id">
+
+                    <label for="reserva-cliente">Nombre del cliente</label>
+                    <input type="text" id="reserva-cliente"
+                        name="cliente" required>
+
+                    <label for="reserva-telefono">Teléfono</label>
+                    <input type="text" id="reserva-telefono"
+                        name="telefono" required>
+
+                    <label for="reserva-fecha">Fecha</label>
+                    <input type="date" id="reserva-fecha"
+                        name="fecha" required>
+
+                    <label for="reserva-hora">Hora</label>
+                    <input type="time" id="reserva-hora"
+                        name="hora" required>
+
+                    <label for="reserva-personas">Número de personas</label>
+                    <input type="number" id="reserva-personas"
+                        name="personas" min="1" required>
+
+                    <div class="form-actions">
+                        <button type="submit">Guardar reserva</button>
+                        <button type="button" class="secondary"
+                            onclick="cerrarFormularioReserva()">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="panel table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Cliente</th>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Hora</th>
+                            <th scope="col">Personas</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-reservas"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <div id="mensaje" class="message"></div>
+
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
